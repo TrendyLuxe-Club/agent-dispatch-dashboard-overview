@@ -8,7 +8,7 @@ I designed ADD and run it as its product owner. AI agents plan, build and review
 
 Most people build with AI by copying and pasting between chat windows. A plan goes from one chat into another, the results come back, then the review comments go back again. **The person is the messaging system.**
 
-That works for one project. With several related streams running at once, the person becomes the bottleneck: too many chats, too much relaying and too much to keep track of. That's where I kept hitting my own limit.
+That works for one project. With several related streams running at once, the person becomes the bottleneck: too many chats, too much relaying and too much to keep track of. That's where I kept hitting my own limit. Bringing in a second person makes it worse: they can't see your chats, so everything has to be forwarded or explained again.
 
 AI agents also drift when left alone. They skip steps, review their own work, overrun estimates and lose track of what was decided.
 
@@ -18,7 +18,10 @@ ADD replaces the person in the middle with an organization.
 
 - **Automated messaging.** Agents hand work to each other through ADD's message system, not through a person. Each message records who sent it, who it's for, which conversation it belongs to and which files it refers to. ADD routes it to the right role and starts the next agent. Nobody copies and pastes.
 - **A framework every agent follows.** Clear roles, written plans, independent review and fixed rules for when work comes back to a person. Every agent knows its lane, so teams keep running without someone watching every message.
-- **Only decisions reach the owner.** The owner sees one short list of decisions across all teams, answers them, and the work carries on.
+- **Deeper reviews, automatically.** Because agents message each other, a scope can go through several reviewers and several rounds of back-and-forth without anyone opening a window. Done by hand, that's six review chats for one person to keep open.
+- **More people, not more windows.** Other people can be added to a project to help shape a scope, follow its shared chats and answer decisions in their own name.
+- **One conversation across accounts and models.** A person can talk with agents on different accounts and different model providers in the same chat. Each agent session carries its own context, so a collaborator who joins a project chat run by the owner's account picks up that project's history immediately, instead of starting over in a blank chat.
+- **Only decisions reach people.** Each person sees one short list of the decisions that are theirs, across all teams, answers them, and the work carries on.
 
 **The goal:** five teams working on independent projects at the same time, each with several sub-projects, run by one person. The gain isn't one project going faster. It's running builds in parallel that a single person couldn't otherwise manage.
 
@@ -35,9 +38,11 @@ flowchart TB
   T2 --> W2[Builders and reviewers]
   T3 --> W3[Builders and reviewers]
   F[Auditors: check samples of finished work] -.->|report only to the owner| O
+  H[Collaborators: invited to projects and chats] -.-> T1
 ```
 
 - **The owner** sets priorities and answers decision cards from one screen that covers every team.
+- **Collaborators** are other people invited to particular projects. They help design scopes, take part in shared chats with the agents, and answer the decisions routed to them. The riskiest calls, such as access, money and credentials, stay with the owner.
 - **The Commissioner** gives each team builders and reviewers from the AI accounts available, watches usage, and flags when more capacity is needed. It also studies what works, such as which models, settings and instructions lead to fewer review rounds, so each new project gets easier.
 - **Team leads** run one project each. They turn goals into plans, run their sub-projects, and never see other teams' work. Their one line of communication out is the Commissioner.
 - **Builders and reviewers** are fresh agents for each job. A reviewer never checks its own work.
@@ -48,8 +53,9 @@ flowchart TB
 ```mermaid
 flowchart LR
   I[Idea] --> S[Scope written by a lead agent]
-  S --> R1[Independent review]
-  R1 --> P{Owner: go on the exact plan}
+  S --> R1[Reviews: with context and fresh]
+  R1 -->|blockers: fix the scope| S
+  R1 -->|no blocker left| P{Owner: go on the exact plan}
   P --> B[Builder agent drafts code and tests]
   B --> C[Coordinator checks it against the brief]
   C --> R2[Independent review by a fresh agent]
@@ -58,6 +64,8 @@ flowchart LR
   B -. "over estimate, off-plan or risky" .-> D[Hold: decision card to the owner]
 ```
 
+- **Problems are fixed in the plan, not the build.** Each scope gets two kinds of review. One reviewer knows the project; a fresh one sees only the scope and catches what familiarity hides. Reviewers come from different model providers. The lead answers every numbered finding, fixing it or disputing it with evidence, and re-checks run until no blocker is left. If three rounds don't settle it, a person decides. Builds start from a cleaner plan, and fewer problems surface late.
+- **The limit is usage, not attention.** How many reviewers and rounds a scope gets depends on the weekly usage limits of the AI accounts, which the Commissioner shares out across teams. It doesn't depend on how many windows a person can juggle.
 - **Approvals bind to an exact version.** A "go" covers one specific revision of a plan, identified by a content hash. If the plan changes, it needs a new go.
 - **No one reviews their own work.** Reviews come from a fresh agent session that didn't write or check the work. Disputed blockers go to judges from two different model providers.
 - **Drift comes back to a person.** Work that runs well over its estimate, changes its goal, weakens a test or reaches outside its limits is held automatically and sent to the owner as a decision card.
@@ -98,17 +106,18 @@ Version 2 rebuilds it as a platform with those controls built in. It's being bui
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: first piece installed |
 | Operating rulebook and decision queue (early version) | In use |
 | Owner screens | First version built on sample data |
+| Collaborators and shared chats across accounts and models | Designed and in the first screens; opens with the first collaborator |
 | Message system and decision queue on the new platform | Planned, with a reviewed plan |
 | Reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
 | Switch-over from version 1 | Planned |
 
 ## What this project shows
 
-- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once.
+- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once, and let other people join without anyone forwarding chats.
 - **AI product ownership:** turning a messy, multi-chat workflow into an operating model with clear roles, decision rights, acceptance criteria and measures (review rounds, time to acceptance, findings, and usage by role and account).
 - **Controls you can audit:** separation of duties, least privilege, approvals tied to exact versions, and a full record of every change. These are the habits of regulated industries, applied to AI agents.
 - **Multi-model orchestration:** Claude and OpenAI models in defined roles, with cross-checking between them.
-- **Quality discipline:** independent review, mutation testing, staged changes and plain-English reporting for non-technical readers.
+- **Quality discipline:** layered independent review that settles problems before the build, mutation testing, staged changes and plain-English reporting for non-technical readers.
 
 ## Tech
 
