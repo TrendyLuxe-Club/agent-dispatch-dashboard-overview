@@ -23,27 +23,38 @@ ADD replaces the person in the middle with an organization.
 - **One conversation across accounts and models.** A person can talk with agents on different accounts and different model providers in the same chat. Each agent session carries its own context, so someone who opens a team's lead chat picks up its history immediately, instead of starting over in a blank chat.
 - **Only decisions reach people.** Each person sees one short list of the decisions that are theirs, across all teams, answers them, and the work carries on.
 
-**The goal:** a few people running several teams on independent projects at the same time, each with its own sub-projects. The first milestone is three people and at least five projects running at once, from ADD's own server. The gain isn't one project going faster. It's running builds in parallel that a small group couldn't otherwise manage.
+**The goal:** a few people pushing every part of a business forward at once without getting stuck. For an online resale business, that means its eBay store, shipping, finance, website and social media all moving in parallel, with a second business alongside it. The first milestone is three people and at least five projects running at once, from ADD's own server. The gain isn't one project going faster. It's running builds in parallel that a small group couldn't otherwise manage.
 
 ## How the teams are organized
 
 ```mermaid
 flowchart TB
-  O["People: the owner and partners (priorities and decisions)"] <--> C[Commissioner: capacity across teams]
-  O -.->|can open any team's chat| T1
-  C --> T1["Team: an online resale business (lead chat)"]
-  C --> T2["Team: another business (lead chat)"]
-  T1 --> P1["Project: its eBay store (lead chat)"]
-  T1 --> P2["Project: another project (lead chat)"]
-  P1 --> S1["Sub-project: eBay search (lead chat)"]
-  S1 --> W1[Builders and reviewers]
-  P2 --> W2[Builders and reviewers]
-  T2 --> W3[Its own projects, builders and reviewers]
+  O["People: the owner and partners"] <--> C[Commissioner: capacity across teams]
+  C --> T1["Team: TLC, an online resale business"]
+  C --> T2["Team: a social media content creator"]
+  T1 --> E[eBay]
+  T1 --> SH[Shipping]
+  T1 --> FI[Finance]
+  T1 --> WE[Website]
+  T1 --> SM[Social media]
+  E --> E1[Store]
+  E --> E2[Search]
+  E --> E3[Messaging]
+  E --> E4[Listings]
+  SH --> SH1[Quotes]
+  SH --> SH2[Tracking and returns]
+  T2 --> T2P[Its own projects and sub-projects]
   F[Auditors: check samples of finished work] -.->|report only to the owner| O
 ```
 
-- **Teams, projects and sub-projects.** Work nests as deep as it needs to: a team (an online resale business), its projects (its eBay store) and their sub-projects (eBay search). Every level has the same kind of view: a chat with that level's lead, the decisions that belong there, and the levels beneath. What's shown gets more specific the further down you go.
-- **People work as a leadership team.** The owner and partners set priorities, talk with the Commissioner and with any team's lead, and answer decision cards from screens that cover every team. Partners see what the owner sees. The owner account keeps a few extra permissions for the riskiest calls, such as access, money and credentials. Which AI account runs a lead chat is a practical setting that can change.
+Every box is a level with its own lead chat. Builders and reviewers are brought in for each job wherever the work is.
+
+- **Teams, projects and sub-projects.** Work nests as deep as it needs to. TLC, an online resale business, is one team. Its projects are eBay, shipping, finance, its website and social media, and each one breaks down further:
+  - **eBay** has sub-projects for the store, search, messaging and listings.
+  - **Shipping** will take each sale from eBay, or any other sales channel added later, and show the best quotes from Shippo and from the channel. It then tracks every parcel through transit and delivery to the end of its return window.
+
+  A second team, a social media content creator, has its own projects and sub-projects at similar depth. Every level has the same kind of view: a chat with that level's lead, the decisions that belong there, and the levels beneath. What's shown gets more specific the further down you go.
+- **People work as a leadership team.** The owner and partners set priorities, talk with the Commissioner and with any team's lead, and answer decision cards from screens that cover every team. Partners can work in the same screens as the owner. The owner account keeps a few extra permissions for the riskiest calls, such as access, money and credentials. Which AI account runs a lead chat is a practical setting that can change.
 - **The Commissioner** gives each team builders and reviewers from the AI accounts available, watches usage, and flags when more capacity is needed. It also studies what works, such as which models, settings and instructions lead to fewer review rounds, so each new project gets easier.
 - **Leads** run one level each. A team lead turns goals into projects and plans and never sees other teams' work; its one line of communication out is the Commissioner. Project and sub-project leads report to the level above them.
 - **Builders and reviewers** are fresh agents for each job. A reviewer never checks its own work.
@@ -107,14 +118,14 @@ Version 2 rebuilds it as a platform with those controls built in, using its own 
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: first piece installed |
 | Operating rulebook and decision queue (early version) | In use |
 | Owner screens | First version built on sample data |
-| Shared workspace: people in teams, lead chats across accounts and models | Designed and in the first screens; opens when the first partner joins |
+| Shared workspace for several people, with chats across accounts and models | Designed and in the first screens. First milestone: three people and five projects at once |
 | Message system and decision queue on the new platform | Planned, with a reviewed plan |
 | Reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
 | Switch-over from version 1 | Planned |
 
 ## What this project shows
 
-- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once, as a shared workspace where other people work with the agents too.
+- **Organization design for AI work:** a team structure, messaging system and rules that let a small group of people direct several AI teams at once, in one shared workspace with the agents.
 - **AI product ownership:** turning a messy, multi-chat workflow into an operating model with clear roles, decision rights, acceptance criteria and measures (review rounds, time to acceptance, findings, and usage by role and account).
 - **Controls you can audit:** separation of duties, least privilege, approvals tied to exact versions, and a full record of every change. These are the habits of regulated industries, applied to AI agents.
 - **Multi-model orchestration:** Claude and OpenAI models in defined roles, with cross-checking between them.
