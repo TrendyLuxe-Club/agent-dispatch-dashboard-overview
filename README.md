@@ -1,14 +1,47 @@
 # Agent Dispatch Dashboard (ADD)
 
-**A governed multi-agent AI system: Claude and OpenAI agents working as an accountable team, with a human owner deciding what matters.**
+**One person, several AI teams, many builds at once.** ADD is the framework and the messaging system that let Claude and OpenAI agents work as organized teams. The owner manages decisions instead of relaying messages between chats.
 
-I designed ADD and run it as its product owner. AI agents plan, build and review the work. People approve the decisions that carry risk, and every step leaves a record. This repository is a public overview: the working system and its records stay private because they run real business work.
+I designed ADD and run it as its product owner. AI agents plan, build and review the work, and pass it to each other. People approve the decisions that carry risk, and every step leaves a record. This repository is a public overview: the working system and its records stay private because they run real business work.
 
 ## The problem
 
-AI agents are fast, but on their own they drift. They skip steps, review their own work, overrun estimates and lose track of what was decided. Passing prompts between chat windows by hand doesn't scale either.
+Most people build with AI by copying and pasting between chat windows. A plan goes from one chat into another, the results come back, then the review comments go back again. **The person is the messaging system.**
 
-ADD treats agents like a team with clear roles, written plans, independent checks and an owner who signs off. The goal is more work running in parallel, with less hand-holding, and a result I can trust.
+That works for one project. With several related streams running at once, the person becomes the bottleneck: too many chats, too much relaying and too much to keep track of. That's where I kept hitting my own limit.
+
+AI agents also drift when left alone. They skip steps, review their own work, overrun estimates and lose track of what was decided.
+
+## The idea
+
+ADD replaces the person in the middle with an organization.
+
+- **Automated messaging.** Agents hand work to each other through ADD's message system, not through a person. Each message records who sent it, who it's for, which conversation it belongs to and which files it refers to. ADD routes it to the right role and starts the next agent. Nobody copies and pastes.
+- **A framework every agent follows.** Clear roles, written plans, independent review and fixed rules for when work comes back to a person. Every agent knows its lane, so teams keep running without someone watching every message.
+- **Only decisions reach the owner.** The owner sees one short list of decisions across all teams, answers them, and the work carries on.
+
+**The goal:** five teams working on independent projects at the same time, each with several sub-projects, run by one person. The gain isn't one project going faster. It's running builds in parallel that a single person couldn't otherwise manage.
+
+## How the teams are organized
+
+```mermaid
+flowchart TB
+  O[Owner: priorities and decisions] --> C[Commissioner: capacity across teams]
+  C --> T1[Team lead: project A]
+  C --> T2[Team lead: project B]
+  C --> T3[Team lead: project C]
+  T1 --> S1[Sub-project leads]
+  S1 --> W1[Builders and reviewers]
+  T2 --> W2[Builders and reviewers]
+  T3 --> W3[Builders and reviewers]
+  F[Auditors: check samples of finished work] -.->|report only to the owner| O
+```
+
+- **The owner** sets priorities and answers decision cards from one screen that covers every team.
+- **The Commissioner** gives each team builders and reviewers from the AI accounts available, watches usage, and flags when more capacity is needed. It also studies what works, such as which models, settings and instructions lead to fewer review rounds, so each new project gets easier.
+- **Team leads** run one project each. They turn goals into plans, run their sub-projects, and never see other teams' work. Their one line of communication out is the Commissioner.
+- **Builders and reviewers** are fresh agents for each job. A reviewer never checks its own work.
+- **Auditors** check a sample of finished work every night and report only to the owner.
 
 ## How a piece of work moves
 
@@ -29,12 +62,13 @@ flowchart LR
 - **No one reviews their own work.** Reviews come from a fresh agent session that didn't write or check the work. Disputed blockers go to judges from two different model providers.
 - **Drift comes back to a person.** Work that runs well over its estimate, changes its goal, weakens a test or reaches outside its limits is held automatically and sent to the owner as a decision card.
 - **Autonomy is earned.** A kind of work needs less oversight only after 10 accepted results in a row with no problems found afterwards, and with the owner's yes. A single serious miss moves it back automatically.
-- **The owner's attention goes to decisions.** A daily digest covers what moved, what's waiting on whom and what stalled. Decisions arrive as short cards.
+- **The owner's attention goes to decisions.** A daily digest covers what moved, what's waiting on whom and what stalled.
 
 ## What's under the hood
 
 | Layer | What it does |
 | --- | --- |
+| **Message system** | Every message names its sender, recipient, conversation and linked files. ADD routes it to a registered role and starts the next agent. Each reply carries a structured result and says who acts next. |
 | **Decision records** | Every change records who made it, what changed and why. A repeated request returns its original receipt instead of applying twice, so a crashed agent can retry safely. |
 | **Who may do what** | A database authorization layer (PostgreSQL) with rules on every row. Each role sees only its own data and changes it only through fixed, checked commands. A built-in self-check reports any permission or structure problem. |
 | **Sealed workspaces** | Each agent run is a capped process with limits on processor, memory, disk, process count and run time, and it can be stopped whole. All of ADD is capped below a fixed share of the machine. |
@@ -52,9 +86,9 @@ flowchart LR
 
 ## Where it stands (November 2026)
 
-The first version of ADD, a message-based coordinator for Claude and OpenAI agents, ran across hundreds of recorded conversations for software, research and documentation. It showed that the approach works, and it showed where it needed real controls.
+The first version of ADD was a message-based coordinator that routed work between Claude and OpenAI agents without copy-and-paste. It ran across hundreds of recorded conversations for software, research and documentation. It proved the approach, and it showed where real controls were needed.
 
-Version 2 rebuilds it as a platform with the controls built in:
+Version 2 rebuilds it as a platform with those controls built in. It's being built with its own framework. Until its new message system is live, I'm still relaying some messages by hand, which is exactly the bottleneck it's built to remove.
 
 | Part | Status |
 | --- | --- |
@@ -62,14 +96,16 @@ Version 2 rebuilds it as a platform with the controls built in:
 | Authorization layer (who may do what) | Done |
 | Database pieces (records, people and accounts, settings…) | In progress: first two accepted |
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: first piece installed |
-| Operating rulebook and decision queue (bootstrap version) | In use |
+| Operating rulebook and decision queue (early version) | In use |
 | Owner screens | First version built on sample data |
-| Messages, reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
+| Message system and decision queue on the new platform | Planned, with a reviewed plan |
+| Reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
 | Switch-over from version 1 | Planned |
 
 ## What this project shows
 
-- **AI product ownership:** turning a messy, multi-chat workflow into an operating model with clear roles, decision rights, acceptance criteria and measures (review rounds, time to acceptance, findings, usage by role).
+- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once.
+- **AI product ownership:** turning a messy, multi-chat workflow into an operating model with clear roles, decision rights, acceptance criteria and measures (review rounds, time to acceptance, findings, and usage by role and account).
 - **Controls you can audit:** separation of duties, least privilege, approvals tied to exact versions, and a full record of every change. These are the habits of regulated industries, applied to AI agents.
 - **Multi-model orchestration:** Claude and OpenAI models in defined roles, with cross-checking between them.
 - **Quality discipline:** independent review, mutation testing, staged changes and plain-English reporting for non-technical readers.
