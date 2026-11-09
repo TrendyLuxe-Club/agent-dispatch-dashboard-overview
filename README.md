@@ -94,9 +94,9 @@ flowchart LR
 
 ## Where it stands (November 2026)
 
-The first version of ADD was a message-based coordinator that routed work between Claude and OpenAI agents without copy-and-paste. It ran across hundreds of recorded conversations for software, research and documentation. It proved the approach, and it showed where real controls were needed.
+The first version of ADD was a working message system: code that routed work between Claude and OpenAI agents, and started each next agent, without copy-and-paste. It ran across hundreds of recorded conversations for software, research and documentation. It proved the approach, and it showed where real controls were needed.
 
-Version 2 rebuilds it as a platform with those controls built in. It's being built with its own framework. Until its new message system is live, I'm still relaying some messages by hand, which is exactly the bottleneck it's built to remove.
+Version 2 rebuilds it as a platform with those controls built in, using its own framework. Version 1 is switched off while that happens, so until the new message system is live I'm relaying messages by hand again. That's exactly the bottleneck ADD exists to remove.
 
 | Part | Status |
 | --- | --- |
