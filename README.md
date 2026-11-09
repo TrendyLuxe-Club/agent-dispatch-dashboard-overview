@@ -1,6 +1,6 @@
 # Agent Dispatch Dashboard (ADD)
 
-**One person, several AI teams, many builds at once.** ADD is the framework and the messaging system that let Claude and OpenAI agents work as organized teams. The owner manages decisions instead of relaying messages between chats.
+**A few people, several AI teams, many builds at once.** ADD is a shared workspace where a small leadership group works with organized teams of AI agents (Claude and OpenAI), held together by a framework and an automated messaging system. People manage decisions instead of relaying messages between chats.
 
 I designed ADD and run it as its product owner. AI agents plan, build and review the work, and pass it to each other. People approve the decisions that carry risk, and every step leaves a record. This repository is a public overview: the working system and its records stay private because they run real business work.
 
@@ -19,32 +19,33 @@ ADD replaces the person in the middle with an organization.
 - **Automated messaging.** Agents hand work to each other through ADD's message system, not through a person. Each message records who sent it, who it's for, which conversation it belongs to and which files it refers to. ADD routes it to the right role and starts the next agent. Nobody copies and pastes.
 - **A framework every agent follows.** Clear roles, written plans, independent review and fixed rules for when work comes back to a person. Every agent knows its lane, so teams keep running without someone watching every message.
 - **Deeper reviews, automatically.** Because agents message each other, a scope can go through several reviewers and several rounds of back-and-forth without anyone opening a window. Done by hand, that's six review chats for one person to keep open.
-- **More people, not more windows.** Other people can be added to a project to help shape a scope, follow its shared chats and answer decisions in their own name.
-- **One conversation across accounts and models.** A person can talk with agents on different accounts and different model providers in the same chat. Each agent session carries its own context, so a collaborator who joins a project chat run by the owner's account picks up that project's history immediately, instead of starting over in a blank chat.
+- **A shared workspace for several people.** Partners work alongside the owner like a leadership team. They can talk with the Commissioner and with any team's lead, see the same screens, help shape scopes, and answer decisions in their own name, without anyone forwarding chats to them.
+- **One conversation across accounts and models.** A person can talk with agents on different accounts and different model providers in the same chat. Each agent session carries its own context, so someone who opens a team's lead chat picks up its history immediately, instead of starting over in a blank chat.
 - **Only decisions reach people.** Each person sees one short list of the decisions that are theirs, across all teams, answers them, and the work carries on.
 
-**The goal:** five teams working on independent projects at the same time, each with several sub-projects, run by one person. The gain isn't one project going faster. It's running builds in parallel that a single person couldn't otherwise manage.
+**The goal:** a few people running several teams on independent projects at the same time, each with its own sub-projects. The first milestone is three people and at least five projects running at once, from ADD's own server. The gain isn't one project going faster. It's running builds in parallel that a small group couldn't otherwise manage.
 
 ## How the teams are organized
 
 ```mermaid
 flowchart TB
-  O[Owner: priorities and decisions] --> C[Commissioner: capacity across teams]
-  C --> T1[Team lead: project A]
-  C --> T2[Team lead: project B]
-  C --> T3[Team lead: project C]
-  T1 --> S1[Sub-project leads]
+  O["People: the owner and partners (priorities and decisions)"] <--> C[Commissioner: capacity across teams]
+  O -.->|can open any team's chat| T1
+  C --> T1["Team: an online resale business (lead chat)"]
+  C --> T2["Team: another business (lead chat)"]
+  T1 --> P1["Project: its eBay store (lead chat)"]
+  T1 --> P2["Project: another project (lead chat)"]
+  P1 --> S1["Sub-project: eBay search (lead chat)"]
   S1 --> W1[Builders and reviewers]
-  T2 --> W2[Builders and reviewers]
-  T3 --> W3[Builders and reviewers]
+  P2 --> W2[Builders and reviewers]
+  T2 --> W3[Its own projects, builders and reviewers]
   F[Auditors: check samples of finished work] -.->|report only to the owner| O
-  H[Collaborators: invited to projects and chats] -.-> T1
 ```
 
-- **The owner** sets priorities and answers decision cards from one screen that covers every team.
-- **Collaborators** are other people invited to particular projects. They help design scopes, take part in shared chats with the agents, and answer the decisions routed to them. The riskiest calls, such as access, money and credentials, stay with the owner.
+- **Teams, projects and sub-projects.** Work nests as deep as it needs to: a team (an online resale business), its projects (its eBay store) and their sub-projects (eBay search). Every level has the same kind of view: a chat with that level's lead, the decisions that belong there, and the levels beneath. What's shown gets more specific the further down you go.
+- **People work as a leadership team.** The owner and partners set priorities, talk with the Commissioner and with any team's lead, and answer decision cards from screens that cover every team. Partners see what the owner sees. The owner account keeps a few extra permissions for the riskiest calls, such as access, money and credentials. Which AI account runs a lead chat is a practical setting that can change.
 - **The Commissioner** gives each team builders and reviewers from the AI accounts available, watches usage, and flags when more capacity is needed. It also studies what works, such as which models, settings and instructions lead to fewer review rounds, so each new project gets easier.
-- **Team leads** run one project each. They turn goals into plans, run their sub-projects, and never see other teams' work. Their one line of communication out is the Commissioner.
+- **Leads** run one level each. A team lead turns goals into projects and plans and never sees other teams' work; its one line of communication out is the Commissioner. Project and sub-project leads report to the level above them.
 - **Builders and reviewers** are fresh agents for each job. A reviewer never checks its own work.
 - **Auditors** check a sample of finished work every night and report only to the owner.
 
@@ -106,14 +107,14 @@ Version 2 rebuilds it as a platform with those controls built in, using its own 
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: first piece installed |
 | Operating rulebook and decision queue (early version) | In use |
 | Owner screens | First version built on sample data |
-| Collaborators and shared chats across accounts and models | Designed and in the first screens; opens with the first collaborator |
+| Shared workspace: people in teams, lead chats across accounts and models | Designed and in the first screens; opens when the first partner joins |
 | Message system and decision queue on the new platform | Planned, with a reviewed plan |
 | Reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
 | Switch-over from version 1 | Planned |
 
 ## What this project shows
 
-- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once, and let other people join without anyone forwarding chats.
+- **Organization design for AI work:** a team structure, messaging system and rules that let one person direct several AI teams at once, as a shared workspace where other people work with the agents too.
 - **AI product ownership:** turning a messy, multi-chat workflow into an operating model with clear roles, decision rights, acceptance criteria and measures (review rounds, time to acceptance, findings, and usage by role and account).
 - **Controls you can audit:** separation of duties, least privilege, approvals tied to exact versions, and a full record of every change. These are the habits of regulated industries, applied to AI agents.
 - **Multi-model orchestration:** Claude and OpenAI models in defined roles, with cross-checking between them.
