@@ -2,6 +2,8 @@
 
 **A few people, several AI teams, many builds at once.** ADD is a shared workspace where a small leadership group works with organized teams of AI agents (Claude and OpenAI), held together by a framework and an automated messaging system. People manage decisions instead of relaying messages between chats.
 
+The message loop is the engine. The screens on top are what make ADD different: one place where people and AI agents from several model families work on the same projects together.
+
 I designed ADD and run it as its product owner. AI agents plan, build and review the work, and pass it to each other. People approve the decisions that carry risk, and every step leaves a record. This repository is a public overview: the working system and its records stay private because they run real business work.
 
 ## The problem
@@ -95,7 +97,7 @@ flowchart LR
 | **Network wall** | Agents reach the internet only through a proxy that allows approved destinations and can cut a connection mid-run. |
 | **Code hand-out** | Agents never touch the real repository. They get a checked, size-limited copy of the files a task needs. Bringing work back is a separate, reviewed step. |
 | **Secrets** | Keys and sign-ins never pass through a chat or a document. A person places them directly, and each has a written replacement procedure. |
-| **Owner screens** | A web app (Python, Starlette) built around one question: what needs me? Colours and fonts live in one theme file, so the look can change without touching the screens. |
+| **Shared screens** | The web app (Python, Starlette) where people and agents work together. There's one view for each team, project and sub-project, with its lead chat and the decisions that belong there, built around one question: what needs me? Colours and fonts live in one theme file, so the look can change without touching the screens. |
 
 ## How I know it works
 
@@ -117,7 +119,7 @@ Version 2 rebuilds it as a platform with those controls built in, using its own 
 | Database pieces (records, people and accounts, settings…) | In progress: first two accepted |
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: first piece installed |
 | Operating rulebook and decision queue (early version) | In use |
-| Owner screens | First version built on sample data |
+| Shared screens | First version built on sample data |
 | Shared workspace for several people, with chats across accounts and models | Designed and in the first screens. First milestone: three people and five projects at once |
 | Message system and decision queue on the new platform | Planned, with a reviewed plan |
 | Reviews, releases, usage tracking and auditing | Planned, with reviewed plans |
