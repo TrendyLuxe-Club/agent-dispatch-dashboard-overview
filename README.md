@@ -117,7 +117,7 @@ Version 2 rebuilds it as a platform with those controls built in, using its own 
 | Server foundation and its safety checks | Done, including a 24-hour load baseline |
 | Authorization layer (who may do what) | Done |
 | Database pieces (records, people and accounts, settings, work records…) | In progress: three accepted; a fourth (work records) passed review; the first test run on the server is next |
-| Runtime core (sealed workspaces, network wall, code hand-out) | In progress: the first piece's install stage is done on the server; four more are accepted as tested drafts and wait for its second stage; a sixth (session transcripts and notes) is built and in review |
+| Runtime core (sealed workspaces, network wall, code hand-out) | In progress: the first piece's install stage is done on the server; four more are accepted as tested drafts and wait for its second stage, one with a small fix under way; a sixth (session transcripts and notes) is built and in review |
 | Operating rulebook and decision queue (early version) | In use |
 | Shared screens | First version built on sample data |
 | Shared workspace for several people, with chats across accounts and models | Designed and in the first screens. First milestone: three people and five projects at once |
