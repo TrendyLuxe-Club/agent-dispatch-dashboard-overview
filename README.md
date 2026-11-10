@@ -116,7 +116,7 @@ Version 2 rebuilds it as a platform with those controls built in, using its own 
 | --- | --- |
 | Server foundation and its safety checks | Done, including a 24-hour load baseline |
 | Authorization layer (who may do what) | Done |
-| Database pieces (records, people and accounts, settings, work records…) | In progress: three accepted; a fourth (work records) passed review; the first test run on the server is next |
+| Database pieces (records, people and accounts, settings, work records…) | In progress: three accepted; a fourth (work records) passed review; the first piece passed its full test on the real server, leaving the live app untouched |
 | Runtime core (sealed workspaces, network wall, code hand-out) | In progress: the first piece's install stage is done on the server; five more are accepted as tested drafts and wait for its second stage, including the server side of session transcripts and notes |
 | Operating rulebook and decision queue (early version) | In use |
 | Shared screens | First version built on sample data |
